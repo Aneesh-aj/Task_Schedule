@@ -1,5 +1,9 @@
 
 export const  adminApi ={
-      login:"/auth/adminLogin",
+      login:"/admin/adminLogin",
+      createTask:"/admin/createTask",
+      getUsers:"/admin/getUsers",
+      getTasks:"/admin/getTasks",
+      updateTask:"/admin/updateTask"
       
 }

@@ -37,5 +37,5 @@ const userSlice = createSlice({
 })
 
 
-export const {setRole,removeRole,setUser,setApproval} = userSlice.actions
+export const {removeRole,setUser} = userSlice.actions
 export default userSlice.reducer

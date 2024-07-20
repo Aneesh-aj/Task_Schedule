@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import image from "../assets/business-management-illustration-set-characters-planning-work-tasks-managing-inbox-emails_566886-5785.jpg"
+import image from "../../assets/SignupBackground.png"
 import { InputText } from 'primereact/inputtext';
 import toast, { Toaster } from "react-hot-toast";
-import { validateEmail, validatePassword, validateUsername } from "../utils/validation";
-import { userSignup } from "../Api/user";
+import { validateEmail, validatePassword, validateUsername } from "../../utils/validation";
+import { userSignup } from "../../Api/user";
 
 
 const UserSignUp = () => {
@@ -20,10 +20,8 @@ const UserSignUp = () => {
     console.log(" the response",response)
     setLoading(false)
     if (response.success) {
-      alert("1" + response.message)
-      localStorage.setItem("verifyToken", response.verifyToken)
-      navigate("/auth/otp")
       toast.success(response.message)
+      navigate("/auth/otp")
     } if (response.response.data.status === 400) {
       toast.error(response.response.data.message)
     } else {
@@ -47,21 +45,21 @@ const UserSignUp = () => {
   };
 
   return (
-    <div className="h-atuo  overflow-y-scroll bg-white w-full p-5 xl:flex  justify-center custom-scrollbar">
+    <div className="h-atuo  overflow-y-scroll bg-white w-full  xl:flex  justify-center custom-scrollbar background_color">
       <div className='xl:w-7/12 hidden xl:visible xl:flex   justify-center items-center'>
-        <div className="bg-red xl:w-full h-[600px] flex object-contai bg-white">
+        <div className="bg-red xl:w-full h-[600px] flex object-contai ">
           <img src={image} alt="" className='xl:w-full h-full' />
         </div>
       </div>
       <div className="xl:w-5/12 ">
-        <div className="w-full m-2 xl:w-10/12   mx-auto my-6 bg-white p-8  rounded-xl custom-box-shadow   " >
+        <div className="w-full m-2 xl:w-10/12   mx-auto my-6  background_color p-8  rounded-xl custom-box-shadow   " >
           <Toaster position="top-right"
             reverseOrder={false} />
           <div className="flex justify-center ">
-            <h1 className="text-4xl font-extrabold pb-4">Signup</h1>
+            <h1 className="text-4xl font-extrabold ">Signup</h1>
           </div>
           <form className="my-10" onSubmit={handleSubmit(handleFormSubmit)}>
-            <div className="flex flex-col space-y-5">
+            <div className="flex flex-col space-y-4">
               <label htmlFor="name">
                 <p className="font-medium text-slate-700 pb-2">Name</p>
                 <input
@@ -154,7 +152,7 @@ const UserSignUp = () => {
                 <span>{loading ? "Loading":"Signup"}</span>
               </button>
 
-              {/* <p className="text-center">
+              <p className="text-center ">
                 Already a user?{' '}
                 <Link to="/auth/userLogin" className="text-indigo-600 font-medium inline-flex space-x-1 items-center">
                   <span>Login </span>
@@ -175,7 +173,7 @@ const UserSignUp = () => {
                     </svg>
                   </span>
                 </Link>
-              </p> */}
+              </p>
 
             </div>
           </form>

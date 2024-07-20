@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate, useParams } from 'react-router-dom';
-import asset from  "../assets/business-management-illustration-set-characters-planning-work-tasks-managing-inbox-emails_566886-5785.jpg";
-import { verifyOtp } from '../Api/user';
+import { useNavigate } from 'react-router-dom';
+import asset from "../../assets/SignupBackground.png"
+import { resendOtp, verifyOtp } from '../../Api/user';
 
 const Otp = () => {
     const [loading, setLoading] = useState(false);
@@ -106,15 +106,20 @@ const Otp = () => {
 
     const resendOtpHandler = async () => {
         
-           
-            toast.success("OTP sent to your email");
-            setTimer(120); 
-            setCanResend(false);
+            const response = await resendOtp()
+            if(response.success){
+
+                toast.success("OTP sent to your email");
+                setTimer(120); 
+                setCanResend(false);
+            }else{
+                toast.error(response.error)
+            }
 
     };
 
     return (
-        <div className="relative font-inter antialiased" style={{ backgroundColor: 'white' }}>
+        <div className="relative font-inter antialiased background_color">
             <main className="relative min-h-screen flex flex-col justify-center overflow-hidden">
                 <div className="w-full flex max-w-6xl mx-auto px-4 md:px-6 py-24 gap-3">
                     <div className="object-contain h-96 w-full hidden xl:block text-center px-4 sm:px-8">

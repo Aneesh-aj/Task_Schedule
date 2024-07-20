@@ -3,16 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { validateEmail, validatePassword } from "../utils/validation"
+import { validateEmail, validatePassword } from "../../utils/validation"
 import toast, { Toaster } from 'react-hot-toast';
-import image from '../assets/business-management-illustration-set-characters-planning-work-tasks-managing-inbox-emails_566886-5785.jpg'
+import image from '../../assets/SignupBackground.png'
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../redux/userSlice';
+import { login } from '../../Api/admin';
 
 
-const UserLogin = () => {
+const AdminLogin = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    // useSelector((state: currentUser) => state)
-    // const dispatch = useDispatch()
+    useSelector((state) => state)
+    const dispatch = useDispatch()
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const handleFormSubmit = async (data) => {
@@ -21,35 +24,40 @@ const UserLogin = () => {
             email: data.email || "",
             password: data.password || ""
         }
-        // const result = await login(user)
+        const result = await login(user)
+        console.log(" user login5555",result)
         setLoading(false)
-        localStorage.setItem("accessToken",result.accessToken)
-        localStorage.setItem("refreshToken",result.refreshToken)
-        localStorage.setItem("role",result.role)
-        if (result.user) {
+         console.log(" the result _____",result)
+        if (result.admin) {
             toast.success(result.message)
-            // dispatch(setUser({
-            //     role: result.role,
-            //     name: result.user.name,
-            //     email: result.user.email,
-            //     id: result.user._id,
-            //     blocked:result.user.blocked 
-            // }))
-            navigate("/")
+
+             setTimeout(()=>{
+                 dispatch(setUser({
+                     role: "admin",
+                     name: "",
+                     email: result.admin.email,
+                     id: result.admin._id,
+                 }))
+                 navigate("/")
+             },2000)
         } else {
-            toast.error(result.response.data.message)
+            if(error.response.data == "Unauthorized"){
+                toast.error(" Invalid Acess!! Login again")
+                
+            }
+            toast.error(result.response.data.error)
         }
     }
 
     return (
-        <div className='h-screen overflow-y-scroll bg-white p-5 w-full xl:flex justify-center custom-scrollbar'>
+        <div className='h-screen overflow-y-scroll bg-white p-5 w-full xl:flex justify-center custom-scrollbar background_color'>
             <div className='xl:w-7/12 hidden xl:visible xl:flex   justify-center items-center'>
                 <div className="bg-red xl:w-full h-[600px] flex object-contain">
                     <img src={image} alt="" className='xl:w-full h-full' />
                 </div>
             </div>
             <div className='xl:w-5/12 '>
-                <div className="w-full m-2 xl:w-10/12 mx-auto  bg-white p-8 rounded-xl custom-box-shadow ">
+                <div className="w-full m-2 xl:w-10/12 mx-auto  background_color p-8 rounded-xl custom-box-shadow ">
                     <Toaster position="top-right"
                         reverseOrder={false} />
                     <div className='flex  justify-center '>
@@ -121,4 +129,4 @@ const UserLogin = () => {
     );
 };
 
-export default UserLogin
+export default AdminLogin

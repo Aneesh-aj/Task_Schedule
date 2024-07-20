@@ -1,19 +1,23 @@
 import { Route, Routes } from "react-router-dom"
-import UserSignUp from "../page/UserSignup"
-import UserLogin from "../page/UserLogin"
-import Home from "../page/Home"
-import Otp from "../page/Otp"
+
+import UserSignUp from "../page/user/UserSignup"
+import UserLogin from "../page/user/UserLogin"
+import Otp from "../page/user/Otp"
+import AdminLogin from "../page/admin/AdminLogin"
+import ErrorPage from "../componant/ErrorPage"
+
 
 
 const AuthRoutes = () => {
-     console.log(" it comes here")
     return (
         <>
             <Routes>
                 <Route path="/userSignup" element={<UserSignUp />}></Route>
                 <Route path='/userLogin' element={<UserLogin/>} />
+                <Route path="/adminLogin" element={<AdminLogin/>} />
                 <Route path="/otp" element={<Otp/>} />
-                <Route path="*" element={<UserLogin/>} ></Route>
+                <Route path="*" element={<ErrorPage/>} ></Route>
+
             </Routes>
         </>
     )
